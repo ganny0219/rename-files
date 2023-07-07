@@ -4,6 +4,8 @@ import multer from "multer";
 import AdmZip from "adm-zip";
 import * as fs from "fs";
 
+import { storage } from "@/utils/firebase";
+
 export const config = {
   api: {
     externalResolver: true,
@@ -13,7 +15,8 @@ export const config = {
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "public/love");
+    const filePath = path.join(process.cwd(), "public", "love");
+    cb(null, filePath);
   },
   filename: (req, file, cb) => {
     const newRegex = new RegExp(req.body.oldText, "gi");
@@ -27,7 +30,7 @@ const router = createRouter();
 
 const cleanFile = (req, res, next) => {
   const filePath = path.join(process.cwd(), "public", "love");
-  const files = fs.readdirSync("public/love");
+  const files = fs.readdirSync(filePath);
   if (files.length != 0) {
     for (const file of files) {
       fs.unlinkSync(filePath + "/" + file);
