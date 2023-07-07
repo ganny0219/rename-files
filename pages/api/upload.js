@@ -32,10 +32,10 @@ const cleanFile = (req, res, next) => {
       fs.unlinkSync("public/love/" + file);
     }
   }
-  const pathZip = path.join(process.cwd(), "loveyou.zip");
-  const zipExist = fs.existsSync(pathZip);
+  // const pathZip = path.join(process.cwd(), "loveyou.zip");
+  const zipExist = fs.existsSync("public/loveyou.zip");
   if (zipExist) {
-    fs.unlinkSync(pathZip);
+    fs.unlinkSync("loveyou.zip");
   }
   next();
 };
@@ -45,14 +45,14 @@ router
   .use(uploadFile)
   .post((req, res) => {
     const zip = new AdmZip();
-    const pathZip = path.join(process.cwd(), "loveyou.zip");
+    // const pathZip = path.join(process.cwd(), "loveyou.zip");
 
     req.files.forEach((file) => {
       zip.addLocalFile(file.path);
     });
-    fs.writeFileSync(pathZip, zip.toBuffer());
+    fs.writeFileSync("public/loveyou.zip", zip.toBuffer());
 
-    const fileBuffer = fs.readFileSync(pathZip);
+    const fileBuffer = fs.readFileSync("public/loveyou.zip");
     res.setHeader("Content-Type", "application/zip");
     res.send(fileBuffer);
   });
