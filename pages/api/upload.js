@@ -15,7 +15,7 @@ export const config = {
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const filePath = path.join(process.cwd(), "public", "love");
+    const filePath = path.join("tmp", "love");
     cb(null, filePath);
   },
   filename: (req, file, cb) => {
@@ -29,7 +29,7 @@ const uploadFile = upload.array("files");
 const router = createRouter();
 
 const cleanFile = (req, res, next) => {
-  const filePath = path.join(process.cwd(), "public", "love");
+  const filePath = path.join("tmp", "love");
   const files = fs.readdirSync(filePath);
   if (files.length != 0) {
     for (const file of files) {
@@ -37,7 +37,7 @@ const cleanFile = (req, res, next) => {
     }
   }
 
-  const zipPath = path.join(process.cwd(), "public", "loveyou.zip");
+  const zipPath = path.join("tmp", "loveyou.zip");
 
   const zipExist = fs.existsSync(zipPath);
   if (zipExist) {
@@ -48,10 +48,10 @@ const cleanFile = (req, res, next) => {
 
 router
   .use(cleanFile)
-  .use(uploadFile)
+  // .use(uploadFile)
   .post((req, res) => {
     const zip = new AdmZip();
-    const zipPath = path.join(process.cwd(), "public", "loveyou.zip");
+    const zipPath = path.join("tmp", "loveyou.zip");
 
     req.files.forEach((file) => {
       zip.addLocalFile(file.path);
