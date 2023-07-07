@@ -43,11 +43,19 @@ export function Home() {
         setDone(true);
       });
   }
-
+  console.log(file);
+  function dropFileHandler(e) {
+    e.preventDefault();
+    setFile(e.dataTransfer.files);
+  }
   return (
     <div className={classes.container}>
       <form className={classes.form} onSubmit={uploadHandler}>
-        <label htmlFor="fileInput">
+        <label
+          htmlFor="fileInput"
+          onDrop={dropFileHandler}
+          onDragOver={(e) => e.preventDefault()}
+        >
           <div className={classes.fileInput}>
             {!file ? (
               <div className={classes.fileInputContent}>
