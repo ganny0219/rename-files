@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import axios from "axios";
 import classes from "../styles/Home.module.css";
 import fileDownload from "js-file-download";
+
 export function Home() {
   const [file, setFile] = useState();
   const [done, setDone] = useState(true);
@@ -10,6 +11,10 @@ export function Home() {
 
   async function uploadHandler(e) {
     e.preventDefault();
+
+    if (!file) {
+      return alert("Belum Memasukan File!");
+    }
 
     const data = new FormData();
     data.append("oldText", oldTextRef.current.value);
@@ -28,6 +33,9 @@ export function Home() {
       })
       .then((res) => {
         fileDownload(res.data, "loveyou.zip");
+        oldTextRef.current.value = undefined;
+        newTextRef.current.value = undefined;
+        setFile(undefined);
         setDone(true);
       })
       .catch((err) => {
@@ -48,7 +56,7 @@ export function Home() {
                 <div className={classes.fileInputButton}>Browse Files</div>
               </div>
             ) : (
-              <div>Ready</div>
+              <div className={classes.ready}>{`Ready :)`}</div>
             )}
           </div>
         </label>

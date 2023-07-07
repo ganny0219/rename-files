@@ -25,40 +25,19 @@ const upload = multer({ storage: storage });
 const uploadFile = upload.array("files");
 const router = createRouter();
 
-// const cleanFile = (req, res, next) => {
-//   const filePath = path.join("tmp", "love");
-//   const files = fs.readdirSync(filePath);
-//   if (files.length != 0) {
-//     for (const file of files) {
-//       fs.unlinkSync(filePath + "/" + file);
-//     }
-//   }
+router.use(uploadFile).post((req, res) => {
+  const zip = new AdmZip();
 
-//   const zipPath = path.join("/tmp/", "loveyou.zip");
-
-//   const zipExist = fs.existsSync(zipPath);
-//   if (zipExist) {
-//     fs.unlinkSync(zipPath);
-//   }
-//   next();
-// };
-
-router
-  // .use(cleanFile)
-  .use(uploadFile)
-  .post((req, res) => {
-    const zip = new AdmZip();
-
-    req.files.forEach((file) => {
-      zip.addLocalFile(file.path);
-    });
-
-    fs.writeFileSync("/tmp/loveyou.zip", zip.toBuffer());
-    const fileBuffer = fs.readFileSync("/tmp/loveyou.zip");
-
-    res.setHeader("Content-Type", "application/zip");
-    res.send(fileBuffer);
+  req.files.forEach((file) => {
+    zip.addLocalFile(file.path);
   });
+
+  fs.writeFileSync("/tmp/loveyou.zip", zip.toBuffer());
+  const fileBuffer = fs.readFileSync("/tmp/loveyou.zip");
+
+  res.setHeader("Content-Type", "application/zip");
+  res.send(fileBuffer);
+});
 
 export default router.handler({
   onError: (err, req, res) => {
