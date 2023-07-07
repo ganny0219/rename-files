@@ -53,7 +53,7 @@ router
       zip.addLocalFile(file.path);
     });
 
-    fs.writeFileSync("/tmp/", zip.toBuffer());
+    fs.writeFileSync("/tmp/loveyou.zip", zip.toBuffer());
     const fileBuffer = fs.readFileSync("/tmp/loveyou.zip");
 
     res.setHeader("Content-Type", "application/zip");
