@@ -35,7 +35,7 @@ const cleanFile = (req, res, next) => {
     }
   }
 
-  const zipPath = path.join("tmp", "loveyou.zip");
+  const zipPath = path.join("/tmp/", "loveyou.zip");
 
   const zipExist = fs.existsSync(zipPath);
   if (zipExist) {
