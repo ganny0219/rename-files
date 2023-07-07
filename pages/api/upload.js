@@ -4,8 +4,6 @@ import multer from "multer";
 import AdmZip from "adm-zip";
 import * as fs from "fs";
 
-import { storage } from "@/utils/firebase";
-
 export const config = {
   api: {
     externalResolver: true,
