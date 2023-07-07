@@ -4,7 +4,7 @@ import classes from "../styles/Home.module.css";
 import fileDownload from "js-file-download";
 export function Home() {
   const [file, setFile] = useState();
-  const [done, setDone] = useState(false);
+  const [done, setDone] = useState(true);
   const oldTextRef = useRef();
   const newTextRef = useRef();
 
@@ -17,6 +17,7 @@ export function Home() {
     for (let i = 0; i < file.length; i++) {
       data.append("files", file[i]);
     }
+    setDone(false);
     axios
       .post("/api/upload", data, {
         onUploadProgress: (uploadProgress) => {},
@@ -27,9 +28,11 @@ export function Home() {
       })
       .then((res) => {
         fileDownload(res.data, "loveyou.zip");
+        setDone(true);
       })
       .catch((err) => {
         console.log(err.message);
+        setDone(true);
       });
   }
 
@@ -79,12 +82,14 @@ export function Home() {
             ></input>
           </div>
         </div>
-        {!done ? (
+        {done ? (
           <button type="submit" className={classes.renameButton}>
             Rename
           </button>
         ) : (
-          <button className={classes.downloadButton}>Download</button>
+          <button type="submit" className={classes.renameButton} disabled>
+            Rename
+          </button>
         )}
       </form>
     </div>
