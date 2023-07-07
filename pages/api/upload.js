@@ -26,27 +26,27 @@ const upload = multer({ storage: storage });
 const uploadFile = upload.array("files");
 const router = createRouter();
 
-const cleanFile = (req, res, next) => {
-  const filePath = path.join("tmp", "love");
-  const files = fs.readdirSync(filePath);
-  if (files.length != 0) {
-    for (const file of files) {
-      fs.unlinkSync(filePath + "/" + file);
-    }
-  }
+// const cleanFile = (req, res, next) => {
+//   const filePath = path.join("tmp", "love");
+//   const files = fs.readdirSync(filePath);
+//   if (files.length != 0) {
+//     for (const file of files) {
+//       fs.unlinkSync(filePath + "/" + file);
+//     }
+//   }
 
-  const zipPath = path.join("/tmp/", "loveyou.zip");
+//   const zipPath = path.join("/tmp/", "loveyou.zip");
 
-  const zipExist = fs.existsSync(zipPath);
-  if (zipExist) {
-    fs.unlinkSync(zipPath);
-  }
-  next();
-};
+//   const zipExist = fs.existsSync(zipPath);
+//   if (zipExist) {
+//     fs.unlinkSync(zipPath);
+//   }
+//   next();
+// };
 
 router
-  .use(cleanFile)
-  // .use(uploadFile)
+  // .use(cleanFile)
+  .use(uploadFile)
   .post((req, res) => {
     const zip = new AdmZip();
     // const zipPath = path.join("tmp", "loveyou.zip");
