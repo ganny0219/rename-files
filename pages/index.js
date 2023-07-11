@@ -33,8 +33,8 @@ export function Home() {
       })
       .then((res) => {
         fileDownload(res.data, "loveyou.zip");
-        oldTextRef.current.value = undefined;
-        newTextRef.current.value = undefined;
+        oldTextRef.current.value = "";
+        newTextRef.current.value = "";
         setFile(undefined);
         setDone(true);
       })
@@ -43,7 +43,6 @@ export function Home() {
         setDone(true);
       });
   }
-  console.log(file);
   function dropFileHandler(e) {
     e.preventDefault();
     setFile(e.dataTransfer.files);
