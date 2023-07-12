@@ -1,0 +1,91 @@
+.form h2 {
+  margin: 0.5em 0;
+  padding: 0;
+}
+
+.container {
+  width: 80%;
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 20px;
+  padding: 1.5em;
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.6);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.fileInput {
+  height: 30vh;
+  border: 2px rgb(255, 235, 145) dashed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.fileInputButton {
+  background-color: rgb(255, 235, 145);
+  border-radius: 1rem;
+  padding: 0.5em;
+}
+
+.fileInputContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.fileInputContent :nth-child(2) {
+  color: gray;
+}
+
+.inputTextContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 1em 0;
+}
+.ready {
+  font-size: 3rem;
+}
+
+.inputItem {
+  margin: 0.5em 0;
+}
+
+.inputItem input {
+  width: 100%;
+  margin-top: 0.25em;
+  border: none;
+  background-color: #eeeeee70;
+  border-radius: 10px;
+  height: 1.8rem;
+  padding: 0 0.5em;
+}
+
+.inputItem input:focus {
+  outline: none !important;
+  border: rgb(255, 235, 145) 2px solid;
+}
+
+.renameButton {
+  margin-top: 2em;
+  border: none;
+  padding: 1em;
+  background-color: rgb(255, 235, 145);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.downloadButton {
+  border: none;
+  padding: 1em;
+  background-color: rgb(197, 248, 175);
+  border-radius: 10px;
+  cursor: pointer;
+}

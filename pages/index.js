@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import axios from "axios";
 import classes from "../styles/Home.module.css";
 import fileDownload from "js-file-download";
+import FilePicker from "@/components/form/FilePicker";
 
 export function Home() {
   const [file, setFile] = useState();
@@ -23,8 +24,8 @@ export function Home() {
       data.append("files", file[i]);
     }
     setDone(false);
-    axios
-      .post("/api/upload", data, {
+    await axios
+      .post("/api/rename", data, {
         onUploadProgress: (uploadProgress) => {},
         headers: {
           "Content-Type": "multipart/form-data",
@@ -43,38 +44,10 @@ export function Home() {
         setDone(true);
       });
   }
-  function dropFileHandler(e) {
-    e.preventDefault();
-    setFile(e.dataTransfer.files);
-  }
   return (
     <div className={classes.container}>
       <form className={classes.form} onSubmit={uploadHandler}>
-        <label
-          htmlFor="fileInput"
-          onDrop={dropFileHandler}
-          onDragOver={(e) => e.preventDefault()}
-        >
-          <div className={classes.fileInput}>
-            {!file ? (
-              <div className={classes.fileInputContent}>
-                <p>Drag and Drop Files Here</p>
-                <p>or</p>
-                <div className={classes.fileInputButton}>Browse Files</div>
-              </div>
-            ) : (
-              <div className={classes.ready}>{`Ready :)`}</div>
-            )}
-          </div>
-        </label>
-        <input
-          type="file"
-          name="fileInput"
-          id="fileInput"
-          multiple
-          hidden
-          onChange={(e) => setFile(e.target.files)}
-        ></input>
+        <FilePicker name="fileRename" setFile={setFile} file={file} />
         <div className={classes.inputTextContainer}>
           <div className={classes.inputItem}>
             <label htmlFor="oldText">Old Text</label>
@@ -99,11 +72,11 @@ export function Home() {
         </div>
         {done ? (
           <button type="submit" className={classes.renameButton}>
-            Rename
+            RENAME
           </button>
         ) : (
           <button type="submit" className={classes.renameButton} disabled>
-            Rename
+            RENAME
           </button>
         )}
       </form>

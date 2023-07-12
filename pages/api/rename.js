@@ -1,5 +1,4 @@
 import { createRouter } from "next-connect";
-import path from "path";
 import multer from "multer";
 import AdmZip from "adm-zip";
 import * as fs from "fs";
