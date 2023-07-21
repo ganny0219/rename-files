@@ -39,9 +39,14 @@ router.use(uploadFields).post(async (req, res) => {
     const mergedBuffer = await merger.saveAsBuffer();
     zip.addFile(listFile.originalname, Buffer.from(mergedBuffer, "utf8"));
   }
-  zip.toBuffer();
+  // fs.writeFileSync(`./public/loveyoupdf.zip`, zip.toBuffer());
+  // const fileBuffer = fs.createReadStream(`./public/loveyoupdf.zip`);
+
+  fs.writeFileSync(`/tmp/loveyoupdf.zip`, zip.toBuffer());
+  const fileBuffer = fs.createReadStream(`/tmp/loveyoupdf.zip`);
+
   res.setHeader("Content-Type", "application/zip");
-  res.send(zip);
+  res.send(fileBuffer);
 });
 
 export default router.handler({
