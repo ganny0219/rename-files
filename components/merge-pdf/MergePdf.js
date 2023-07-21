@@ -42,8 +42,6 @@ function MergePdf() {
         console.log(error);
       });
   }
-  console.log(addFiles);
-  console.log(listFiles);
   return (
     <div className={classes.container}>
       <form className={classes.form} onSubmit={mergeHandler}>

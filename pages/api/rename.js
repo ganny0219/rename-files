@@ -30,12 +30,12 @@ router.use(uploadFile).post((req, res) => {
   req.files.forEach((file) => {
     zip.addLocalFile(file.path);
   });
-
-  fs.writeFileSync("/tmp/loveyou.zip", zip.toBuffer());
-  const fileBuffer = fs.createReadStream("/tmp/loveyou.zip");
+  zip.toBuffer();
+  // fs.writeFileSync("/tmp/loveyou.zip", zip.toBuffer());
+  // const fileBuffer = fs.createReadStream("/tmp/loveyou.zip");
 
   res.setHeader("Content-Type", "application/zip");
-  res.send(fileBuffer);
+  res.send(zip);
 });
 
 export default router.handler({
