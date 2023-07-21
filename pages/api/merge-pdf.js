@@ -43,7 +43,7 @@ router.use(uploadFields).post(async (req, res) => {
   // const fileBuffer = fs.readFileSync(`./public/loveyoupdf.zip`);
 
   fs.writeFileSync(`/tmp/loveyoupdf.zip`, zip.toBuffer());
-  const fileBuffer = fs.readFileSync(`/tmp/loveyoupdf.zip`);
+  const fileBuffer = fs.createReadStream(`/tmp/loveyoupdf.zip`);
 
   res.setHeader("Content-Type", "application/zip");
   res.send(fileBuffer);
