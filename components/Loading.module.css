@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+.loadingScreen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  width: 60%;
+  height: 60%;
+  border-radius: 20px;
+  font-family: fantasy;
+  color: #f3f3f3;
+  font-size: 3rem;
+}
+.loader {
+  border: 0.5rem solid #f3f3f3; /* Light grey */
+  border-top: 0.5rem solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 3.25rem;
+  height: 3.25rem;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

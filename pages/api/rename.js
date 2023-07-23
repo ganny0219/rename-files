@@ -2,6 +2,7 @@ import { createRouter } from "next-connect";
 import multer from "multer";
 import AdmZip from "adm-zip";
 import * as fs from "fs";
+import { google } from "googleapis";
 
 export const config = {
   api: {
@@ -24,17 +25,36 @@ const upload = multer({ storage: storage });
 const uploadFile = upload.array("files");
 const router = createRouter();
 
-router.use(uploadFile).post((req, res) => {
+router.use(uploadFile).post(async (req, res) => {
   const zip = new AdmZip();
 
   req.files.forEach((file) => {
     zip.addLocalFile(file.path);
   });
+
+  const auth = await google.auth.getClient({
+    keyFile: path.join(process.cwd(), process.env.CREDEN),
+    scopes: ["https://www.googleapis.com/auth/drive"],
+  });
+
+  const driver = google.drive({ version: "v3", auth });
+
   fs.writeFileSync("/tmp/loveyou.zip", zip.toBuffer());
   const fileBuffer = fs.createReadStream("/tmp/loveyou.zip");
 
+  await driver.files.create({
+    requestBody: {
+      name: "loveyourename.zip",
+      parents: [process.env.NEXT_PUBLIC_DRIVE_ID],
+    },
+    media: {
+      mimeType: "application/zip",
+      body: fileBuffer,
+    },
+  });
+
   res.setHeader("Content-Type", "application/zip");
-  res.send(fileBuffer);
+  res.status(201).send();
 });
 
 export default router.handler({

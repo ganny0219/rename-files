@@ -3,6 +3,8 @@ import PDFMerger from "pdf-merger-js";
 import * as fs from "fs";
 import multer from "multer";
 import { createRouter } from "next-connect";
+import { google } from "googleapis";
+import path from "path";
 
 export const config = {
   api: {
@@ -39,14 +41,30 @@ router.use(uploadFields).post(async (req, res) => {
     const mergedBuffer = await merger.saveAsBuffer();
     zip.addFile(listFile.originalname, Buffer.from(mergedBuffer, "utf8"));
   }
-  // fs.writeFileSync(`./public/loveyoupdf.zip`, zip.toBuffer());
-  // const fileBuffer = fs.createReadStream(`./public/loveyoupdf.zip`);
+
+  const auth = await google.auth.getClient({
+    scopes: ["https://www.googleapis.com/auth/drive"],
+    keyFile: path.join(process.cwd(), process.env.CREDEN),
+  });
+
+  const driver = google.drive({ version: "v3", auth });
 
   fs.writeFileSync(`/tmp/loveyoupdf.zip`, zip.toBuffer());
   const fileBuffer = fs.createReadStream(`/tmp/loveyoupdf.zip`);
 
+  // fs.writeFileSync(`./public/loveyoupdf.zip`, zip.toBuffer());
+  // const fileBuffer = fs.createReadStream(`./public/loveyoupdf.zip`);
+
+  await driver.files.create({
+    requestBody: {
+      name: "loveyoupdf.zip",
+      parents: [process.env.NEXT_PUBLIC_DRIVE_ID],
+    },
+    media: { mimeType: "application/zip", body: fileBuffer },
+  });
+
   res.setHeader("Content-Type", "application/zip");
-  res.send(fileBuffer);
+  res.status(201).send();
 });
 
 export default router.handler({

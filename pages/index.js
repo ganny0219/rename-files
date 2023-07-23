@@ -33,7 +33,8 @@ export function Home() {
         responseType: "blob",
       })
       .then((res) => {
-        fileDownload(res.data, "loveyou.zip");
+        // fileDownload(res.data, "loveyou.zip");
+        alert("Check your google drive :)");
         oldTextRef.current.value = "";
         newTextRef.current.value = "";
         setFile(undefined);
@@ -45,42 +46,44 @@ export function Home() {
       });
   }
   return (
-    <div className={classes.container}>
-      <form className={classes.form} onSubmit={uploadHandler}>
-        <FilePicker name="fileRename" setFile={setFile} file={file} />
-        <div className={classes.inputTextContainer}>
-          <div className={classes.inputItem}>
-            <label htmlFor="oldText">Old Text</label>
-            <input
-              type="text"
-              name="oldText"
-              ref={oldTextRef}
-              autoComplete="off"
-              required
-            ></input>
+    <>
+      <div className={classes.container}>
+        <form className={classes.form} onSubmit={uploadHandler}>
+          <FilePicker name="fileRename" setFile={setFile} file={file} />
+          <div className={classes.inputTextContainer}>
+            <div className={classes.inputItem}>
+              <label htmlFor="oldText">Old Text</label>
+              <input
+                type="text"
+                name="oldText"
+                ref={oldTextRef}
+                autoComplete="off"
+                required
+              ></input>
+            </div>
+            <div className={classes.inputItem}>
+              <label htmlFor="newText">New Text</label>
+              <input
+                type="text"
+                name="newText"
+                ref={newTextRef}
+                autoComplete="off"
+                required
+              ></input>
+            </div>
           </div>
-          <div className={classes.inputItem}>
-            <label htmlFor="newText">New Text</label>
-            <input
-              type="text"
-              name="newText"
-              ref={newTextRef}
-              autoComplete="off"
-              required
-            ></input>
-          </div>
-        </div>
-        {done ? (
-          <button type="submit" className={classes.renameButton}>
-            RENAME
-          </button>
-        ) : (
-          <button type="submit" className={classes.renameButton} disabled>
-            RENAME
-          </button>
-        )}
-      </form>
-    </div>
+          {done ? (
+            <button type="submit" className={classes.renameButton}>
+              RENAME
+            </button>
+          ) : (
+            <button type="submit" className={classes.renameButton} disabled>
+              RENAME
+            </button>
+          )}
+        </form>
+      </div>
+    </>
   );
 }
 
