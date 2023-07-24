@@ -58,7 +58,7 @@ router.use(uploadFields).post(async (req, res) => {
   await driver.files.create({
     requestBody: {
       name: "loveyoupdf.zip",
-      parents: ["1b5nnmBFayrG-Bkb2n8oEBUe4ufZtTchF"],
+      parents: [process.env.NEXT_PUBLIC_DRIVE_ID],
     },
     media: { mimeType: "application/zip", body: fileBuffer },
   });
