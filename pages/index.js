@@ -1,14 +1,15 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useContext } from "react";
 import axios from "axios";
 import classes from "../styles/Home.module.css";
 import fileDownload from "js-file-download";
 import FilePicker from "@/components/form/FilePicker";
+import { LoadingContext } from "./_app";
 
 export function Home() {
   const [file, setFile] = useState();
-  const [done, setDone] = useState(true);
   const oldTextRef = useRef();
   const newTextRef = useRef();
+  const loadCtx = useContext(LoadingContext);
 
   async function uploadHandler(e) {
     e.preventDefault();
@@ -23,7 +24,7 @@ export function Home() {
     for (let i = 0; i < file.length; i++) {
       data.append("files", file[i]);
     }
-    setDone(false);
+    loadCtx.setLoad(true);
     await axios
       .post("/api/rename", data, {
         onUploadProgress: (uploadProgress) => {},
@@ -34,15 +35,15 @@ export function Home() {
       })
       .then((res) => {
         // fileDownload(res.data, "loveyou.zip");
+        loadCtx.setLoad(false);
         alert("Check your google drive :)");
         oldTextRef.current.value = "";
         newTextRef.current.value = "";
         setFile(undefined);
-        setDone(true);
       })
       .catch((err) => {
+        loadCtx.setLoad(false);
         console.log(err.message);
-        setDone(true);
       });
   }
   return (
@@ -72,7 +73,7 @@ export function Home() {
               ></input>
             </div>
           </div>
-          {done ? (
+          {!loadCtx.loading ? (
             <button type="submit" className={classes.renameButton}>
               RENAME
             </button>

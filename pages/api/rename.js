@@ -13,7 +13,8 @@ export const config = {
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "/tmp/");
+    // cb(null, "/tmp/");
+    cb(null, "public/");
   },
   filename: (req, file, cb) => {
     const newRegex = new RegExp(req.body.oldText, "gi");
@@ -41,10 +42,12 @@ router.use(uploadFile).post(async (req, res) => {
 
   fs.writeFileSync("/tmp/loveyou.zip", zip.toBuffer());
   const fileBuffer = fs.createReadStream("/tmp/loveyou.zip");
+  // fs.writeFileSync("public/loveyou.zip", zip.toBuffer());
+  // const fileBuffer = fs.createReadStream("public/loveyou.zip");
 
   await driver.files.create({
     requestBody: {
-      name: "loveyourename.zip",
+      name: "loveyou.zip",
       parents: [process.env.NEXT_PUBLIC_DRIVE_ID],
     },
     media: {

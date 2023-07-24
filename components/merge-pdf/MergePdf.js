@@ -9,10 +9,8 @@ import { LoadingContext } from "@/pages/_app";
 function MergePdf() {
   const [listFiles, setListFiles] = useState();
   const [addFiles, setAddFiles] = useState();
-  const [done, setDone] = useState(true);
 
   const loadCtx = useContext(LoadingContext);
-  console.log(loadCtx);
 
   async function mergeHandler(e) {
     e.preventDefault();
@@ -29,7 +27,7 @@ function MergePdf() {
     for (const listFile of listFiles) {
       data.append("listFiles", listFile);
     }
-    setDone(false);
+    loadCtx.setLoad(true);
     await axios
       .post("/api/merge-pdf", data, {
         headers: {
@@ -39,12 +37,13 @@ function MergePdf() {
       })
       .then((res) => {
         // fileDownload(res.data, "loveyoupdf.zip");
+        loadCtx.setLoad(false);
         alert("Check your google grive :)");
         setAddFiles(undefined);
         setListFiles(undefined);
-        setDone(true);
       })
       .catch((error) => {
+        loadCtx.setLoad(false);
         console.log(error);
       });
   }
@@ -56,7 +55,7 @@ function MergePdf() {
           <FilePicker name="listFile" file={listFiles} setFile={setListFiles} />
           <h2>Add File</h2>
           <FilePicker name="addFile" file={addFiles} setFile={setAddFiles} />
-          {done ? (
+          {!loadCtx.loading ? (
             <button type="submit" className={classes.renameButton}>
               MERGE
             </button>
