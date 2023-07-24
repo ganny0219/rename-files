@@ -10,8 +10,6 @@ export function Home() {
   const oldTextRef = useRef();
   const newTextRef = useRef();
   const loadCtx = useContext(LoadingContext);
-  console.log(process.env.CREDEN);
-  console.log(process.env.DRIVE_ID);
   async function uploadHandler(e) {
     e.preventDefault();
 
