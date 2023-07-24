@@ -50,7 +50,7 @@ router.use(uploadFields).post(async (req, res) => {
   const driver = google.drive({ version: "v3", auth });
 
   fs.writeFileSync(`/tmp/loveyoupdf.zip`, zip.toBuffer());
-  const fileBuffer = fs.readFileSync(`/tmp/loveyoupdf.zip`);
+  const fileBuffer = fs.createReadStream(`/tmp/loveyoupdf.zip`);
 
   // fs.writeFileSync(`./public/loveyoupdf.zip`, zip.toBuffer());
   // const fileBuffer = fs.createReadStream(`./public/loveyoupdf.zip`);

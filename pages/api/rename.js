@@ -41,7 +41,7 @@ router.use(uploadFile).post(async (req, res) => {
   const driver = google.drive({ version: "v3", auth });
 
   fs.writeFileSync("/tmp/loveyou.zip", zip.toBuffer());
-  const fileBuffer = fs.readFileSync("/tmp/loveyou.zip");
+  const fileBuffer = fs.createReadStream("/tmp/loveyou.zip");
   // fs.writeFileSync("public/loveyou.zip", zip.toBuffer());
   // const fileBuffer = fs.createReadStream("public/loveyou.zip");
 
