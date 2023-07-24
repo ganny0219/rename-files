@@ -5,6 +5,10 @@
 
 module.exports = {
   // nextConfig,
+  env: {
+    CREDEN: process.env.CREDEN,
+    DRIVE_ID: process.env.DRIVE_ID,
+  },
   async headers() {
     return [
       {
