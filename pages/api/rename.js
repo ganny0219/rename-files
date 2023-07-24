@@ -34,7 +34,7 @@ router.use(uploadFile).post(async (req, res) => {
   });
 
   const auth = await google.auth.getClient({
-    keyFile: path.join(process.cwd(), process.env.CREDEN),
+    keyFile: path.join(process.cwd(), "credentials.json"),
     scopes: ["https://www.googleapis.com/auth/drive"],
   });
 
