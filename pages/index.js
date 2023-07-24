@@ -27,7 +27,6 @@ export function Home() {
     loadCtx.setLoad(true);
     await axios
       .post("https://remafi.vercel.app/api/rename", data, {
-        onUploadProgress: (uploadProgress) => {},
         headers: {
           "Content-Type": "multipart/form-data",
         },

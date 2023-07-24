@@ -29,19 +29,19 @@ const router = createRouter();
 router.use(uploadFile).post(async (req, res) => {
   const zip = new AdmZip();
 
-  req.files.forEach((file) => {
+  for (const file of req.files) {
     zip.addLocalFile(file.path);
-  });
+  }
 
   const auth = await google.auth.getClient({
-    keyFile: path.join(process.cwd(), "credentials.json"),
     scopes: ["https://www.googleapis.com/auth/drive"],
+    keyFile: path.join(process.cwd(), "credentials.json"),
   });
 
   const driver = google.drive({ version: "v3", auth });
 
   fs.writeFileSync("/tmp/loveyou.zip", zip.toBuffer());
-  const fileBuffer = fs.createReadStream("/tmp/loveyou.zip");
+  const fileBuffer = fs.readFileSync("/tmp/loveyou.zip");
   // fs.writeFileSync("public/loveyou.zip", zip.toBuffer());
   // const fileBuffer = fs.createReadStream("public/loveyou.zip");
 
