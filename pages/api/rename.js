@@ -13,8 +13,8 @@ export const config = {
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    // cb(null, "/tmp/");
-    cb(null, "public/");
+    cb(null, "/tmp/");
+    // cb(null, "public/");
   },
   filename: (req, file, cb) => {
     const newRegex = new RegExp(req.body.oldText, "gi");

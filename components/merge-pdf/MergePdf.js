@@ -29,7 +29,7 @@ function MergePdf() {
     }
     loadCtx.setLoad(true);
     await axios
-      .post("/api/merge-pdf", data, {
+      .post("https://remafi.vercel.app/api/merge-pdf", data, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
